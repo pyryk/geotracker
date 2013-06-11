@@ -1,30 +1,12 @@
 var express = require('express'),
+     mongoq = require('mongoq'),
           _ = require('underscore');
 
 var app = express();
+var db = mongoq(process.env.MONGOHQ_URL || "ottoapp");
 
 app.use(express.bodyParser()); // Automatically parse JSON in POST requests
 app.use(express.static(__dirname + '/client')); // Serve static files from public (e.g http://localhost:8080/index.html)
-
-var locations = {};
-var saveLocation = function(id, lat, lng, accuracy) {
-	// if only one latlng param, assume its an object
-	if (lat !== undefined && lng === undefined) {
-		locations[id] = lat;
-	} else {
-		locations[id] = {lat: lat, lng: lng, accuracy: accuracy};
-	}
-};
-
-var getLocation = function(id) {
-	return locations[id];
-};
-
-var getLocations = function() {
-	return _.map(locations, function(value, key) {
-		return _.extend(_.clone(value), {id: key});
-	});
-};
 
 // POST location
 // data format
@@ -32,13 +14,15 @@ var getLocations = function() {
 app.post('/api/location', function(req, res) {
 	var data = req.body;
 	
-	saveLocation(data.id, data.lat, data.lng, data.accuracy);
-	
-	res.json(getLocation(data.id), 201);
+	db.collection('locations').update({id: data.id}, data, {safe: true, upsert: true}).done(function(success) {
+		res.json({success: success}, success ? 200 : 404);
+	});
 });
 
 app.get('/api/location', function(req, res) {
-	res.json(getLocations());
+	db.collection('locations').find().toArray().done(function(locations) {
+        res.json(locations);
+    });
 });
 
 var port = process.env.PORT || 5000;
