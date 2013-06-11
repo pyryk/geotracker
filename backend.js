@@ -13,6 +13,7 @@ app.use(express.static(__dirname + '/client')); // Serve static files from publi
 // {"id": "abc", "lat": 12.34, "lng": 56.78, 100}
 app.post('/api/location', function(req, res) {
 	var data = req.body;
+	data.timestamp = new Date();
 	
 	db.collection('locations').update({id: data.id}, data, {safe: true, upsert: true}).done(function(success) {
 		res.json({success: success}, success ? 200 : 404);

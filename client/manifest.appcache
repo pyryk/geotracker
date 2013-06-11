@@ -1,0 +1,19 @@
+CACHE MANIFEST
+# version 7
+
+CACHE:
+index.html
+img/remote-marker-icon.png
+js/peruskartta.js
+js/lib/jquery-2.0.2.min.js
+js/lib/moment.min.js
+js/lib/leaflet/leaflet.css
+js/lib/leaflet/leaflet.ie.css
+js/lib/leaflet/leaflet.js
+js/lib/leaflet/images/layers.png
+js/lib/leaflet/images/marker-icon.png
+js/lib/leaflet/images/marker-icon@2x.png
+js/lib/leaflet/images/marker-shadow.png
+
+NETWORK:
+*
