@@ -142,7 +142,7 @@ var peruskartta = {
   			if (this.remotes[remote.id]) {
   				this.remotes[remote.id].setLatLng(latlng);
   			} else {
-  				this.remotes[remote.id] = new L.Marker(latlng, {icon: new L.Icon({iconUrl:'img/remote-marker-icon.png'})});
+  				this.remotes[remote.id] = new L.Marker(latlng, {icon: new L.Icon({iconUrl:'img/remote-marker-icon.png', iconAnchor: [13, 41]})});
   				this.map.addLayer(this.remotes[remote.id]);
   			}
   			var timestampStr = moment(remote.timestamp).fromNow();
@@ -158,7 +158,7 @@ var peruskartta = {
   			if (this.targets[target.number]) {
   				this.targets[target.number].setLatLng(latlng);
   			} else {
-  				this.targets[target.number] = new L.Marker(latlng, {icon: new L.Icon({iconUrl:'img/target-marker-icon.png'})});
+  				this.targets[target.number] = new L.Marker(latlng, {icon: new L.Icon({iconUrl:'img/target-marker-icon.png', iconAnchor: [13, 41]})});
   				this.map.addLayer(this.targets[target.number]);
   			}
   			this.targets[target.number].bindPopup('Rasti ' + target.number + ': ' + target.name);
