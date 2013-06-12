@@ -26,5 +26,11 @@ app.get('/api/location', function(req, res) {
     });
 });
 
+app.get('/api/targets', function(req, res) {
+	db.collection('targets').find().toArray().done(function(targets) {
+        res.json(targets);
+    });
+});
+
 var port = process.env.PORT || 5000;
 app.listen(port);

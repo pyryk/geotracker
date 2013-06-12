@@ -5,6 +5,7 @@ var peruskartta = {
   defaultLocation: new L.LatLng(60.2275,24.9335),
   panned: false,
   remotes: {},
+  targets: [],
   
   initialize: function() {
     // initialize the map on the "map" div
@@ -57,7 +58,9 @@ var peruskartta = {
     
     //window.setInterval(window.proxy(this, this.updateLocation), 10000);
     window.setInterval(window.proxy(this, this.updateRemotes), 3000);
+    this.updateRemotes();
     this.updateLocation();
+    this.addTargets();
 
     if (window.applicationCache) {
       applicationCache.addEventListener('updateready', function() {
@@ -144,6 +147,21 @@ var peruskartta = {
   			}
   			var timestampStr = moment(remote.timestamp).fromNow();
   			this.remotes[remote.id].bindPopup(remote.id + ' - ' + timestampStr);
+  		}
+  	}));
+  },
+  addTargets: function() {
+  	$.getJSON('api/targets').then(window.proxy(this, function(data) {
+  		for (var i in data) {
+  			var target = data[i];
+  			var latlng = new L.LatLng(target.lat, target.lng);
+  			if (this.targets[target.number]) {
+  				this.targets[target.number].setLatLng(latlng);
+  			} else {
+  				this.targets[target.number] = new L.Marker(latlng, {icon: new L.Icon({iconUrl:'img/target-marker-icon.png'})});
+  				this.map.addLayer(this.targets[target.number]);
+  			}
+  			this.targets[target.number].bindPopup('Rasti ' + target.number + ': ' + target.name);
   		}
   	}));
   }
