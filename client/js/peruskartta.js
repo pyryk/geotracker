@@ -6,6 +6,7 @@ var peruskartta = {
   panned: false,
   remotes: {},
   targets: [],
+  path: undefined,
   
   initialize: function() {
     // initialize the map on the "map" div
@@ -162,6 +163,17 @@ var peruskartta = {
   				this.map.addLayer(this.targets[target.number]);
   			}
   			this.targets[target.number].bindPopup('Rasti ' + target.number + ': ' + target.name);
+  		}
+  		
+  		// add lines between targets
+  		var targetLocations = [];
+  		for (var i in this.targets) {
+  			targetLocations.push(this.targets[i].getLatLng());
+  		}
+  		if (this.path) {
+  			this.path.setLatLngs(targetLocations);
+  		} else {
+  			this.path = L.polyline(targetLocations, {color: 'blue'}).addTo(this.map);
   		}
   	}));
   }
