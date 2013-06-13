@@ -162,7 +162,7 @@ var peruskartta = {
   				this.targets[target.number] = new L.Marker(latlng, {icon: new L.Icon({iconUrl:'img/target-marker-icon.png', iconAnchor: [13, 41]})});
   				this.map.addLayer(this.targets[target.number]);
   			}
-  			this.targets[target.number].bindPopup('Rasti ' + target.number + ': ' + target.name);
+  			this.targets[target.number].bindPopup('Rasti ' + target.number + ': ' + target.name, {maxWidth: 250});
   		}
   		
   		// add lines between targets
