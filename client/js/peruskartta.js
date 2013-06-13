@@ -13,7 +13,7 @@ var peruskartta = {
 
     var tileurl = 'http://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg';
     var basemap = new L.TileLayer(tileurl, {
-        attribution: 'Map data &copy; <a href="http://www.maanmittauslaitos.fi">Maanmittauslaitos</a>, tile service by <a href="http://kartat.kapsi.fi">Kapsi</a>&nbsp;&nbsp;',
+        attribution: 'data by <a href="http://www.maanmittauslaitos.fi">Maanmittauslaitos</a> & <a href="http://kartat.kapsi.fi">Kapsi</a>&nbsp;&nbsp;',
         scheme: 'tms',
         errorTileUrl: 'notfound.png'
     });
