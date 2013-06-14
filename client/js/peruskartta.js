@@ -81,6 +81,13 @@ var peruskartta = {
     	this.trackPaths = !this.trackPaths;
     }));
     
+    $('#postMessage').click(window.proxy(this, function() {
+    	var msg = prompt('Enter message');
+    	if (msg) {
+			$.post('/api/message', {message: msg}, function(data) {}, 'application/json');
+    	}
+    }));
+    
   },
   isInLocation: function(latlng) {
     var center = this.map.getCenter();
