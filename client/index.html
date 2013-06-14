@@ -19,6 +19,12 @@
       padding: 0;
       border: 0;
     }
+    #trackPaths {
+    	position: absolute;
+    	bottom: 10px;
+    	left: 10px;
+    	background-color: rgba(255,255,255,0.5);
+    }
   </style>
   <script src="js/lib/leaflet/leaflet.js"></script>
   <script src="js/lib/jquery-2.0.2.min.js"></script>
@@ -28,6 +34,7 @@
 <body>
   <div id="map">
   </div>
+  <div id="trackPaths">Track paths</div>
   <script type="text/javascript" src="js/peruskartta.js"></script>
   <script type="text/javascript" charset="utf-8">
     window.onload = function() {

@@ -5,6 +5,7 @@ var peruskartta = {
   defaultLocation: new L.LatLng(60.2275,24.9335),
   panned: false,
   remotes: {},
+  remotePaths: {},
   targets: [],
   path: undefined,
   
@@ -75,6 +76,10 @@ var peruskartta = {
         console.log('stuff has now been cached');
       })
     }
+    
+    $('#trackPaths').click(window.proxy(this, function() {
+    	this.trackPaths = !this.trackPaths;
+    }));
     
   },
   isInLocation: function(latlng) {
@@ -150,6 +155,9 @@ var peruskartta = {
   			this.remotes[remote.id].bindPopup(remote.id + ' - ' + timestampStr);
   		}
   	}));
+  	if (this.trackPaths) {
+  		this.addRemotePaths();
+  	}
   },
   addTargets: function() {
   	$.getJSON('api/targets').then(window.proxy(this, function(data) {
@@ -175,6 +183,22 @@ var peruskartta = {
   		} else {
   			this.path = L.polyline(targetLocations, {color: 'blue'}).addTo(this.map);
   		}
+  	}));
+  },
+  addRemotePaths: function() {
+  	$.getJSON('api/location?all=1').then(window.proxy(this, function(data) {
+	 	for (var i in data) {
+	 		var points = [];
+	 		for (var j in data[i]) {
+	 			points.push(new L.LatLng(data[i][j].lat, data[i][j].lng));
+	 		}
+	 		if (this.remotePaths[i]) {
+	 			this.remotePaths[i].setLatLngs(points);
+	 		} else {
+	 			this.remotePaths[i] = new L.polyline(points, {color:'red'});
+	 			this.remotePaths[i].addTo(this.map);
+	 		}
+	 	}
   	}));
   }
 }
