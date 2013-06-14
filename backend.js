@@ -12,7 +12,8 @@ app.use(express.static(__dirname + '/client')); // Serve static files from publi
 // data format
 // {"id": "abc", "lat": 12.34, "lng": 56.78, 100}
 app.post('/api/location', function(req, res) {
-	console.log('POST location request:', req.body);
+	console.log('POST location request:', req.body, ' - ', typeof req.body);
+	console.log(req);
 	var data = req.body;
 	data.timestamp = new Date();
 	
